@@ -1,0 +1,32 @@
+add:
+	push ebp
+	mov ebp, esp
+	sub esp, 4
+
+	mov ax, WORD[ebp + 12]
+	add ax, WORD[ebp + 10]
+	add ax, WORD[ebp + 8]
+	mov [result], ax
+	leave
+	ret
+
+section .text
+
+	global _start
+
+_start:
+	push WORD[x]
+	push WORD[y]
+	push WORD[z]
+	call add
+
+	mov eax, 1
+	int 0x80
+
+section .data
+	x	dw	5
+	y	dw	21
+	z	dw	-14
+
+section .bss
+	result	resw	1
